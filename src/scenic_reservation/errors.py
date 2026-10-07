@@ -21,6 +21,13 @@ class NotFoundError(DomainError):
     status = 404
 
 
+class ConflictError(DomainError):
+    """请求编号或业务状态与既有内容冲突。"""
+
+    code = "conflict"
+    status = 409
+
+
 class PermissionDenied(DomainError):
     """操作者没有执行当前动作的权限。"""
 
@@ -28,8 +35,15 @@ class PermissionDenied(DomainError):
     status = 403
 
 
-class ConflictError(DomainError):
-    """请求编号或业务唯一键与既有内容冲突。"""
+class CapacityExceededError(DomainError):
+    """目标时段剩余容量不足以容纳本次占位。"""
 
-    code = "conflict"
+    code = "capacity_exceeded"
+    status = 409
+
+
+class OrderStateError(DomainError):
+    """订单当前状态不允许执行该动作（如确认已取消的订单）。"""
+
+    code = "order_state_invalid"
     status = 409
